@@ -38,7 +38,11 @@ bwg_get <- function(dataname) {
   
   assertthat::assert_that(is_json)
   
-  content <- content(response, as = "text")
+  ## parse response to text
+  content <- httr::content(response, as = "text")
   
-  jsonlite::fromJSON(content[["result"]])
+  response_data <- jsonlite::fromJSON(content)
+  
+  ## hopefully it is true that there is always part of the results called "dataname"
+  response_data$results[[dataname]]
 }
