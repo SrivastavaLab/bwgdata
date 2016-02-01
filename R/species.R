@@ -8,8 +8,6 @@
 #'   
 #' @return a data.frame containing one whole table.
 #' @export
-#' 
-#' @examples
 bwg_get <- function(dataname) {
   
   ## first, check if there is a token

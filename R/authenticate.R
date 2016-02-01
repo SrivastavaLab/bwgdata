@@ -8,8 +8,6 @@
 #'   
 #' @return sets environment variable with login information
 #' @export
-#' 
-#' @examples
 bwg_auth <- function(username, password) {
   ## should check if it exists, and not rerun the function.
   token_exists <- exists("token", envir = parent.frame())
