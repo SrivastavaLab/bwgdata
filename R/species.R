@@ -12,9 +12,9 @@
 bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   
   ## first, check if there is a token
-  assertthat::assert_that(exists("token", envir = parent.frame()))
+  assertthat::assert_that(exists("token", envir = credentials))
   
-  token <- get("token", envir = parent.frame())
+  token <- get("token", envir = credentials)
   
   ## process token
   ### its a list, so we simplify it to a scalar vector:
