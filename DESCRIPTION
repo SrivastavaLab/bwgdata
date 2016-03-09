@@ -9,6 +9,6 @@ License: MIT License
 LazyData: true
 RoxygenNote: 5.0.1
 Imports: httr, 
-jsonlite, 
-assertthat,
-getPass
+    jsonlite, 
+    assertthat,
+    getPass
