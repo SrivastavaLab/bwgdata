@@ -48,7 +48,7 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   if (isTRUE(to_dataframe)){
     ## parse response to text
     
-    response_data <- jsonlite::fromJSON(content, flatten = TRUE, convert = )
+    response_data <- jsonlite::fromJSON(content, flatten = TRUE)
     
     ## hopefully it is true that there is always part of the results called "dataname"
     output <- response_data$results#[[dataname]]
