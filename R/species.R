@@ -5,10 +5,11 @@
 #' 
 #' @param dataname the name of the dataset you want (e.g.
 #'   "species")
+#' @param opts list of named options for the different API routes.
 #'   
 #' @return a data.frame containing one whole table.
 #' @export
-bwg_get <- function(dataname) {
+bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   
   ## first, check if there is a token
   assertthat::assert_that(exists("token", envir = parent.frame()))
@@ -24,11 +25,15 @@ bwg_get <- function(dataname) {
   ## request the species
   
   baseurl <- "http://www.zoology.ubc.ca/~lui/v1/api/"
+  
+  list_method <- list(route = dataname,
+                      action = "list")
+  
+  q <- c(list_method, opts)
 
   response <- httr::GET(baseurl,
                         httr::add_headers(Authorization = bearer),
-                        query = list(route = dataname,
-                                     action = "list"))
+                        query = q)
  
   ## error if it didn't work
   httr::stop_for_status(response)
@@ -38,11 +43,17 @@ bwg_get <- function(dataname) {
   
   assertthat::assert_that(is_json)
   
-  ## parse response to text
   content <- httr::content(response, as = "text")
   
-  response_data <- jsonlite::fromJSON(content)
-  
-  ## hopefully it is true that there is always part of the results called "dataname"
-  response_data$results[[dataname]]
+  if (isTRUE(to_dataframe)){
+    ## parse response to text
+    
+    response_data <- jsonlite::fromJSON(content, flatten = TRUE, convert = )
+    
+    ## hopefully it is true that there is always part of the results called "dataname"
+    output <- response_data$results#[[dataname]]
+  } else {
+    output <- content
+  }
+   output 
 }
