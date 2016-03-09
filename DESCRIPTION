@@ -8,4 +8,7 @@ Depends:
 License: MIT License
 LazyData: true
 RoxygenNote: 5.0.1
-Imports: httr, jsonlite, assertthat
+Imports: httr, 
+    jsonlite, 
+    assertthat,
+    getPass

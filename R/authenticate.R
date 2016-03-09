@@ -1,3 +1,5 @@
+credentials <- new.env(parent = emptyenv())
+
 #' Get login information for the database
 #' 
 #' In order to access the bwgdb, you need a login token.
@@ -8,15 +10,12 @@
 #'   
 #' @return sets environment variable with login information
 #' @export
-bwg_auth <- function(username, password) {
+bwg_auth <- function() {
   ## should check if it exists, and not rerun the function.
-  token_exists <- exists("token", envir = parent.frame())
-  
-  if (token_exists) stop("you've already got a token")
 
-  ## check inputs
-  assertthat::assert_that(is.character(username))
-  assertthat::assert_that(is.character(password))
+  username <- getPass::getPass("USERNAME: ")
+  password <- getPass::getPass("PASSWORD: ")
+
   
   ## create POST 
   url <- "http://www.zoology.ubc.ca/~lui/v1/api/?route=users&action=login"
@@ -31,6 +30,6 @@ bwg_auth <- function(username, password) {
   
   answer <- httr::content(r, as = "text")
   
-  token <<- jsonlite::fromJSON(answer)[["results"]]
+  credentials$token  <- jsonlite::fromJSON(answer)[["results"]]
 
 }
