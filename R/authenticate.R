@@ -13,7 +13,7 @@ credentials <- new.env(parent = emptyenv())
 bwg_auth <- function() {
   ## should check if it exists, and not rerun the function.
 
-  username <- getPass::getPass("USERNAME: ")
+  username <- readline("USERNAME: ")
   password <- getPass::getPass("PASSWORD: ")
 
   
