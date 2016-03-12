@@ -1,10 +1,12 @@
 library(jqr)
 library(dplyr)
-bwg_auth("andrew", "2h3lianthus")
+library(bwgdata)
+
+bwg_auth()
 
 bwg_get("species", NULL)
 
-trts <- bwg_get("species", list(traits = "true"), to_dataframe = FALSE)
+trts <- bwg_get("species", list(traits = "true"))
 
 View(trts)
 trts %>% 
@@ -53,6 +55,8 @@ bwg_get("datasets")
 bwg_get("visits")
 
 bwg_get("bromeliads", opts = list(visit_id = 26))
+
+bwg_get("bromeliads")
 
 bwg_get("matrix",opts = list(dataset_id = 41) )
 
