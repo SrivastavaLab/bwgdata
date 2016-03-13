@@ -1,6 +1,6 @@
 Package: bwgdata
 Title: Download data from Bromeliad Working Group website
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: person("Andrew", "MacDonald", email = "a.a.m.macdonald@gmail.com", role = c("aut", "cre"))
 Description: Easy access to the Bromeliad Working Group database from R
 Depends:
