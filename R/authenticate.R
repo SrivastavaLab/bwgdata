@@ -2,12 +2,11 @@ credentials <- new.env(parent = emptyenv())
 
 #' Get login information for the database
 #' 
-#' In order to access the bwgdb, you need a login token.
-#' This function gets it for you.
+#' In order to access the bwgdb, you need a login token. 
+#' This function gets it for you. It will ask you for your
+#' BWG username and password (masked)
 #' 
-#' @param username bwgdb username
-#' @param password bwgdb password
-#'   
+#' 
 #' @return sets environment variable with login information
 #' @export
 bwg_auth <- function() {
