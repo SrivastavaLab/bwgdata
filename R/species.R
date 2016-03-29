@@ -18,7 +18,7 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   }
   
   token <- get("token", envir = credentials)
-  browser()
+  
   ## process token
   ### its a list, so we simplify it to a scalar vector:
   token_value <- token[[1]]
@@ -54,9 +54,10 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
     response_data <- jsonlite::fromJSON(content, flatten = TRUE)
     
     ## hopefully it is true that there is always part of the results called "dataname"
-    if (exists(response_data$results[[dataname]])) {
+    if (assertthat::has_name(response_data$results, dataname)) {
       output <- tibble::as_data_frame(response_data$results[[dataname]])
     } else {
+      message("coercion to data.frame impossible! returning a list")
       output <- response_data$results
     }
     
