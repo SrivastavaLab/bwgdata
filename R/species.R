@@ -54,7 +54,12 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
     response_data <- jsonlite::fromJSON(content, flatten = TRUE)
     
     ## hopefully it is true that there is always part of the results called "dataname"
-    output <- response_data$results#[[dataname]]
+    if (exists(response_data$results[[dataname]])) {
+      output <- tibble::as_data_frame(response_data$results[[dataname]])
+    } else {
+      output <- response_data$results
+    }
+    
   } else {
     output <- content
   }
