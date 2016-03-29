@@ -12,10 +12,13 @@
 bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   
   ## first, check if there is a token
-  assertthat::assert_that(exists("token", envir = credentials))
+  if (!exists("token", envir = credentials)) {
+    message("please log in first!")
+    bwg_auth()
+  }
   
   token <- get("token", envir = credentials)
-  
+  browser()
   ## process token
   ### its a list, so we simplify it to a scalar vector:
   token_value <- token[[1]]
