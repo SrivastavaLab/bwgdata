@@ -8,6 +8,12 @@ bwg_get("species", NULL)
 
 trts <- bwg_get("species", list(traits = "true"))
 
+### fix that weird names column ###
+trts %>% 
+  mutate(names = purrr::map(names, paste0, collapse = "_")) %>% 
+  tidyr::unnest(names)
+
+
 View(trts)
 trts %>% 
   select(success)
@@ -52,12 +58,12 @@ jq(x, '{user, title: .titles[]}')
 
 bwg_get("datasets")
 
-bwg_get("visits")
+bwg_get("visits") %>% View
 
-bwg_get("bromeliads", opts = list(visit_id = 26))
+bwg_get("bromeliads", opts = list(visit_id = 231))
 
-bwg_get("bromeliads")
+bwg_get("bromeliads") %>% class()
 
-bwg_get("matrix",opts = list(dataset_id = 41) )
+bwg_get("matrix",opts = list(dataset_id = 275) )
 
 bwgtools::get_bwg_names()
