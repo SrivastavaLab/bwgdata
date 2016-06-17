@@ -1,0 +1,64 @@
+---
+title: "Report on the BWG datasets"
+date: 16 June 2016
+output: 
+  html_document:
+    toc: true
+---
+
+```{r, echo=FALSE, message=FALSE, warning=TRUE}
+library(knitr)
+opts_chunk$set(echo=FALSE, message=FALSE, warning=TRUE) 
+```
+
+
+## Introduction
+
+We can access the bwg datasets using the R package `bwgdata`. At present, this package is only available on github. You can install it directly from there using `devtools`.
+
+```r
+library(devtools)
+install_github("Srivastavalab/bwgdata")
+```
+
+### Logging in
+
+The data is private, so the first step is always to log in. 
+```r
+library(bwgdata)
+bwg_auth()
+```
+
+Obtain the map data
+
+```{r}
+map <- readRDS("map.rds")
+
+library(ggmap)
+library(bwgdata)
+library(ggplot2)
+library(dplyr)
+
+source("../.Rprofile")
+dats <- bwg_get("datasets")
+
+locs <- dats %>% 
+  filter(!grepl("Test.*", x = name)) %>% 
+  select(location, lat, lng) %>% 
+  group_by(location, lat, lng) %>% 
+  tally %>% 
+  ungroup() %>% 
+  mutate(lat = as.numeric(lat),
+         lng = as.numeric(lng))
+
+
+ggmap(map) + 
+  geom_point(aes(x = lng, y = lat, size = n),
+             alpha = 0.4,
+             data = locs) +
+  theme_void()
+
+
+```
+
+
