@@ -12,9 +12,18 @@ credentials <- new.env(parent = emptyenv())
 bwg_auth <- function() {
   ## should check if it exists, and not rerun the function.
 
-  username <- readline("USERNAME: ")
-  password <- getPass::getPass("PASSWORD: ")
-
+  ## check first for username and password options
+  usr <- getOption("bwgdbUsername")
+  pwd <- getOption("bwgdbPassword")
+  
+  if (is.null(usr) & is.null(pwd)) {
+    
+    username <- readline("USERNAME: ")
+    password <- getPass::getPass("PASSWORD: ")
+  } else {
+    username <- usr
+    password <- pwd
+  }
   
   ## create POST 
   url <- "http://www.zoology.ubc.ca/~lui/v1/api/?route=users&action=login"
