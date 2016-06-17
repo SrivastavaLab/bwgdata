@@ -81,6 +81,10 @@ library(ggmap)
 
 SAm <- c(left = -120, bottom = -56, right = -34, top = 30)
 map <- get_stamenmap(SAm, zoom = 5, maptype = "watercolor")
+
+saveRDS(map, "scripts/map.rds")
+
+
 ggmap(map)
 
 dats <- bwg_get("datasets")
