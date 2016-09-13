@@ -1,4 +1,3 @@
-## script for tidying the result of bwg_get when you get the species abundances ("matrix")
 
 weird <- new.env()
 
@@ -22,7 +21,7 @@ make_brom_a_df <- function(abd_data){
              ~ map_at(.x, "measurements",
                       ~ map(.x,
                             ~ map_at(.x, "bromeliads",
-                                     ~ data_frame(brm = names(.x),
+                                     ~ data_frame(bromeliad_id = names(.x),
                                                   abd = test_numeric(.x))))))
 }
 
