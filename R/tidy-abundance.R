@@ -43,7 +43,7 @@ make_full_df <- function(abd_data_flat){
     at_depth(2,
              ~ map_at(.x, "measurements",
                       ~ map(.x, one_measurement) %>%
-                        bind_rows)) %>%
+                        bind_rows(.id = "measurement_id"))) %>%
     at_depth(2, flatten) %>%
     at_depth(2, ~ invoke(data_frame, .x)) %>%
     at_depth(1, bind_rows, .id = "species_id") %>%
