@@ -27,7 +27,7 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   
   ## request the species
   
-  baseurl <- "http://www.zoology.ubc.ca/~lui/v1/api/"
+  baseurl <- "https://www.zoology.ubc.ca/~lize/v1/api/"
   
   list_method <- list(route = dataname,
                       action = "list")
@@ -44,7 +44,7 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   ## is it json?
   is_json <- grepl("json", httr::headers(response)$`content-type`) # is there a better way?
   
-  assertthat::assert_that(is_json)
+  # assertthat::assert_that(is_json)
   
   content <- httr::content(response, as = "text")
   
@@ -59,6 +59,7 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
     } else {
       message("coercion to data.frame impossible! returning a list")
       output <- response_data$results
+      
     }
     
   } else {
