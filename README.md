@@ -1,5 +1,7 @@
 # Obtaining data from the BWG database
 
+last updated Andrew, Diane, Sandra Feb 2024
+
 A simple package to access our (currently private) API for the bromelaid working group database.
 
 ## Installation
