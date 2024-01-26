@@ -27,7 +27,7 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   
   ## request the species
   
-  baseurl <- "https://www.zoology.ubc.ca/~lize/v1/api/"
+  baseurl <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v1/api/"
   
   list_method <- list(route = dataname,
                       action = "list")
@@ -55,7 +55,7 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
     
     ## hopefully it is true that there is always part of the results called "dataname"
     if (assertthat::has_name(response_data$results, dataname)) {
-      output <- tibble::as_data_frame(response_data$results[[dataname]])
+      output <- tibble::as_tibble(response_data$results[[dataname]])
     } else {
       message("coercion to data.frame impossible! returning a list")
       output <- response_data$results

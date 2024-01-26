@@ -17,8 +17,9 @@ bwg_auth <- function() {
 
   
   ## create POST 
-  url <- "https://www.zoology.ubc.ca/~lize/v1/api/?route=users&action=login"
+  url <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v1/api/?route=users&action=login"
   
+  # browser()
   body <- list(username = username,
                password = password)
   
