@@ -11,13 +11,13 @@ credentials <- new.env(parent = emptyenv())
 #' @export
 bwg_auth <- function() {
   ## should check if it exists, and not rerun the function.
-
+  
   username <- readline("USERNAME: ")
   password <- getPass::getPass("PASSWORD: ")
-
+  
   
   ## create POST 
-  url <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v1/api/?route=users&action=login"
+  url <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/?route=users&action=login"
   
   # browser()
   body <- list(username = username,
@@ -31,5 +31,5 @@ bwg_auth <- function() {
   answer <- httr::content(r, as = "text")
   
   credentials$token  <- jsonlite::fromJSON(answer)[["results"]]
-
+  
 }
