@@ -20,11 +20,7 @@ bwg_auth <- function() {
   username <- readline("USERNAME: ")
   password <- getPass::getPass("PASSWORD: ")
   
-<<<<<<< HEAD
   ## create POST 
-=======
-  ## create POST request body
->>>>>>> 2dc4eeb5764448ca9936cd199ab9d152a484f08f
   url <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/?route=users&action=login"
   
   body <- list(username = username,

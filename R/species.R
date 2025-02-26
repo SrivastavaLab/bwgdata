@@ -27,17 +27,8 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   bearer <- paste0("bearer ", token_value)
   
   ## request the species
-<<<<<<< HEAD
-  
-  baseurl <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"
-  
-  list_method <- list(route = dataname,
-                      action = "list")
-  
-=======
   baseurl <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"
   list_method <- list(route = dataname, action = "list")
->>>>>>> 2dc4eeb5764448ca9936cd199ab9d152a484f08f
   q <- c(list_method, opts)
   
   response <- httr::GET(baseurl,
