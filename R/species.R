@@ -6,7 +6,10 @@
 #' @param dataname the name of the dataset you want (e.g.
 #'   "species")
 #' @param opts list of named options for the different API routes.
-#'   
+#' @param to_dataframe logical, should the response be converted to a 
+#'   data frame? Default is TRUE. If FALSE, the raw content of the response 
+#'   is returned as text.
+#'  
 #' @return a data.frame containing one whole table.
 #' @export
 bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {

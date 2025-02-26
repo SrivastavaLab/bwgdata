@@ -1,13 +1,18 @@
-credentials <- new.env(parent = emptyenv())
-
-#' Get login information for the database
+#' Get login information for the BWG database
 #' 
-#' In order to access the bwgdb, you need a login token. 
-#' This function gets it for you. It will ask you for your
-#' BWG username and password (masked)
+#' This function retrieves a login token necessary for accessing the BWG database. 
+#' It prompts the user for their BWG username and password (the password is masked), 
+#' and then sends a login request to the API to obtain an authentication token. 
+#' This token is saved in the global environment variable `credentials` for later use.
 #' 
+#' @details
+#' The login information is stored in the `credentials` environment, specifically 
+#' in the `token` field. The token is required for making subsequent requests 
+#' to the BWG database API.
 #' 
-#' @return sets environment variable with login information
+#' @return This function does not return a value but sets the `credentials$token` 
+#'   environment variable with the obtained login token.
+#' 
 #' @export
 bwg_auth <- function() {
   ## should check if it exists, and not rerun the function.
@@ -15,21 +20,19 @@ bwg_auth <- function() {
   username <- readline("USERNAME: ")
   password <- getPass::getPass("PASSWORD: ")
   
-  
-  ## create POST 
+  ## create POST request body
   url <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/?route=users&action=login"
   
-  # browser()
   body <- list(username = username,
                password = password)
   
   r <- httr::POST(url, body = body, encode = "json")
   
-  ## check status code
+  ## check if the request was successful
   httr::stop_for_status(r)
   
   answer <- httr::content(r, as = "text")
   
+  ## store the token in the credentials environment
   credentials$token  <- jsonlite::fromJSON(answer)[["results"]]
-  
 }
