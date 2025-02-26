@@ -58,5 +58,5 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
     output <- content
   }
   
-  return(output)
+  output
 }
