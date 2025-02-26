@@ -6,7 +6,10 @@
 #' @param dataname the name of the dataset you want (e.g.
 #'   "species")
 #' @param opts list of named options for the different API routes.
-#'   
+#' @param to_dataframe logical, should the response be converted to a 
+#'   data frame? Default is TRUE. If FALSE, the raw content of the response 
+#'   is returned as text.
+#'  
 #' @return a data.frame containing one whole table.
 #' @export
 bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
@@ -20,50 +23,52 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   token <- get("token", envir = credentials)
   
   ## process token
-  ### its a list, so we simplify it to a scalar vector:
   token_value <- token[[1]]
-  ### then we add the word "bearer " to the beginning
   bearer <- paste0("bearer ", token_value)
   
   ## request the species
+<<<<<<< HEAD
   
   baseurl <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"
   
   list_method <- list(route = dataname,
                       action = "list")
   
+=======
+  baseurl <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"
+  list_method <- list(route = dataname, action = "list")
+>>>>>>> 2dc4eeb5764448ca9936cd199ab9d152a484f08f
   q <- c(list_method, opts)
-
+  
   response <- httr::GET(baseurl,
                         httr::add_headers(Authorization = bearer),
                         query = q)
- 
+  
   ## error if it didn't work
   httr::stop_for_status(response)
   
   ## is it json?
-  is_json <- grepl("json", httr::headers(response)$`content-type`) # is there a better way?
-  
-  # assertthat::assert_that(is_json)
-  
+  is_json <- grepl("json", httr::headers(response)$`content-type`)
   content <- httr::content(response, as = "text")
   
-  if (isTRUE(to_dataframe)){
-    ## parse response to text
-    
+  if (isTRUE(to_dataframe)) {
+    ## Parse response
     response_data <- jsonlite::fromJSON(content, flatten = TRUE)
     
-    ## hopefully it is true that there is always part of the results called "dataname"
-    if (assertthat::has_name(response_data$results, dataname)) {
+    ## Determine how to extract data
+    if (is.data.frame(response_data$results)) {
+      # If results is already a data frame, convert to tibble
+      output <- tibble::as_tibble(response_data$results)
+    } else if (assertthat::has_name(response_data$results, dataname)) {
+      # If results has a nested data frame for the dataname
       output <- tibble::as_tibble(response_data$results[[dataname]])
     } else {
-      message("coercion to data.frame impossible! returning a list")
-      output <- response_data$results
-      
+      # If results is a flat list, combine into a data frame
+      output <- tibble::as_tibble(response_data$results)
     }
-    
   } else {
     output <- content
   }
-   output 
+  
+  output
 }
