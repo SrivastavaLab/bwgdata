@@ -7,7 +7,7 @@ Depends:
     R (>= 3.2.0)
 License: MIT License
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 7.3.2
 Imports: httr, 
     jsonlite, 
     assertthat,

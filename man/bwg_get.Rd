@@ -19,4 +19,3 @@ a data.frame containing one whole table.
 At present this is very general, since perhaps we will 
 only ever get whole tables?
 }
-

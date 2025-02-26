@@ -14,4 +14,3 @@ In order to access the bwgdb, you need a login token.
 This function gets it for you. It will ask you for your
 BWG username and password (masked)
 }
-
