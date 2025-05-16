@@ -1,3 +1,7 @@
+if (!exists("credentials", inherits = FALSE)) {
+  credentials <- new.env(parent = emptyenv())
+}
+
 #' Get login information for the BWG database
 #' 
 #' This function retrieves a login token necessary for accessing the BWG database. 
