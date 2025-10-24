@@ -13,19 +13,43 @@ library(devtools)
 install_github("Srivastavalab/bwgdata")
 ```
 
-If you don't have `devtools`, you can try the much more lightweight `ghit`
+If you don't have `devtools`, you can try the much more lightweight `remotes`
 
 ```r
-install.packages(ghit)
-library(ghit)
-install_github("Srivastavalab/bwgdata")
+install.packages(remotes)
+remotes::install_github("Srivastavalab/bwgdata")
 ```
 
-## usage
+## Authentification
 
 Before accessing data from our database, you'll need a valid username and password. 
+`bwgdata` has been updated to use **environment variables** instead of interactive passwords. 
+To learn more about this approach read the [httr vignette](https://cran.r-project.org/web/packages/httr/vignettes/secrets.html)
 
-### Step 1: Authenticate
+### Using `.Renviron` to store your sign-in info
+
+This approach requires a specific text file called `.Renviron`. 
+When R starts up, it looks for a file of that name. You can make it manually or via R in the following way:
+
+For your entire computer:
+
+```r
+file.edit("~/.Renviron")
+```
+
+**NOTE**: if you do this, make sure you know where that file ended up so you can edit it again later if you need!
+
+For your specific project:
+
+```r
+file.edit("./.Renviron")
+```
+
+**NOTE**: if you do this, make SURE you do not put `.Renviron` on github! 
+Do this by adding it to your `.gitignore` file.
+
+
+### Interactive authentification via `bwg_auth()`
 
 First, you need to tell R your username and password:
 
@@ -41,7 +65,7 @@ You will be prompted for your username and your password. The latter will be "ma
 
 If some third thing happens, please tell me! This would be very unusual.
 
-### Step 2: access data
+## Accessing data
 
 Right now there's only one data-obtaining function:
 
