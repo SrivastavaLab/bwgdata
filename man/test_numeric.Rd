@@ -10,10 +10,10 @@ test_numeric(to_num)
 \item{to_num}{A vector of values to be converted to numeric.}
 }
 \value{
-A numeric vector where invalid values are converted to NA. 
+A numeric vector where invalid values are converted to NA.
   It also updates the 'weird' environment with the invalid entries.
 }
 \description{
-This function converts input values into numeric format and stores any 
+This function converts input values into numeric format and stores any
 values that are not valid numbers (NA) into a list of problems.
 }

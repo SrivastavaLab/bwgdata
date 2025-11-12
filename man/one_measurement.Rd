@@ -7,13 +7,13 @@
 one_measurement(measure_list)
 }
 \arguments{
-\item{measure_list}{A list containing measurements for a particular insect 
+\item{measure_list}{A list containing measurements for a particular insect
 size.}
 }
 \value{
 A data frame representing the measurements for a specific insect size.
 }
 \description{
-This function processes a list of measurements for a specific insect size 
+This function processes a list of measurements for a specific insect size
 and returns them as a flat data frame.
 }

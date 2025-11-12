@@ -2,6 +2,7 @@
 
 export(bwg_auth)
 export(bwg_get)
+export(get_all_abundances)
 export(make_brom_a_df)
 export(one_measurement)
 export(test_numeric)

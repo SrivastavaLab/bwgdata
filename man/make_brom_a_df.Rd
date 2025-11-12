@@ -10,11 +10,12 @@ make_brom_a_df(abd_data)
 \item{abd_data}{A nested list containing abundance data.}
 }
 \value{
-A nested data frame where each element corresponds to the 
+A nested data frame where each element corresponds to the
   abundance of a species in a particular bromeliad.
 }
 \description{
-This function processes abundance data at a depth of 2 in a nested list 
-and returns a data frame for each dataset. It extracts measurements related 
+This function processes abundance data at a depth of 2 in a nested list
+and returns a data frame for each dataset. It extracts measurements related
 to bromeliads and calculates abundance values.
+Leaving the measurements column nested for a time so that
 }

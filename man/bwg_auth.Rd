@@ -7,17 +7,17 @@
 bwg_auth()
 }
 \value{
-This function does not return a value but sets the `credentials$token` 
+This function does not return a value but sets the `credentials$token`
   environment variable with the obtained login token.
 }
 \description{
-This function retrieves a login token necessary for accessing the BWG database. 
-It prompts the user for their BWG username and password (the password is masked), 
-and then sends a login request to the API to obtain an authentication token. 
+This function retrieves a login token necessary for accessing the BWG database.
+It prompts the user for their BWG username and password (the password is masked),
+and then sends a login request to the API to obtain an authentication token.
 This token is saved in the global environment variable `credentials` for later use.
 }
 \details{
-The login information is stored in the `credentials` environment, specifically 
-in the `token` field. The token is required for making subsequent requests 
+The login information is stored in the `credentials` environment, specifically
+in the `token` field. The token is required for making subsequent requests
 to the BWG database API.
 }

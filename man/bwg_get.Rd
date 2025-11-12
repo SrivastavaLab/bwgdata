@@ -12,14 +12,14 @@ bwg_get(dataname, opts = NULL, to_dataframe = TRUE)
 
 \item{opts}{list of named options for the different API routes.}
 
-\item{to_dataframe}{logical, should the response be converted to a 
-data frame? Default is TRUE. If FALSE, the raw content of the response 
+\item{to_dataframe}{logical, should the response be converted to a
+data frame? Default is TRUE. If FALSE, the raw content of the response
 is returned as text.}
 }
 \value{
 a data.frame containing one whole table.
 }
 \description{
-At present this is very general, since perhaps we will 
+At present this is very general, since perhaps we will
 only ever get whole tables?
 }
