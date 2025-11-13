@@ -88,3 +88,36 @@ get_all_abundances <- function(.dats){
 
   return(abds_)
 }
+
+
+#' Get all bromeliad information from the database
+#'
+#' @param .dats a dataframe containing visits. it must have a column called
+#'   "visit_id" which stores the IDs for the visits whose bromeliads will be
+#'   downloaded. Typically these would be unique, as in the output from
+#'   `bwg_get("visits")`.
+#'
+#' @returns a single dataframe with a column called visit_id, where visit ID is
+#'   stored as an integer. The dataframe has one row per bromeliad.
+#' @export
+get_all_bromeliads <- function(.dats){
+
+  all_brom_list_dropempty <- all_brom_list |>
+    purrr::discard(~nrow(.x) == 0)
+
+  all_brom_list_dropempty |>
+    purrr:::map_int(~unique(.x[["visit_id"]]))
+
+  if(all(names(vids) == vids)) {
+    message("all visit ID match correctly to the query, with no duplicates")
+  } else {
+    stop("there seems to be a visit response that doesn't match the query")
+  }
+
+  # id column not necessary because the visit ID is within the table also, and the
+  # database key is identical to the visible visit_id
+  all_brom_df <- dplyr::bind_rows(all_brom_list, .id = NULL)
+
+  return(all_brom_df)
+}
+
