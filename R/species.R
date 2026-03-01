@@ -9,10 +9,14 @@
 #' @param to_dataframe logical, should the response be converted to a
 #'   data frame? Default is TRUE. If FALSE, the raw content of the response
 #'   is returned as text.
+#' @param baseurl the database URL we're using. defaults to "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"
 #'
 #' @return a data.frame containing one whole table.
 #' @export
-bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
+bwg_get <- function(dataname,
+                    opts = NULL,
+                    to_dataframe = TRUE,
+                    baseurl = "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/") {
 
   ## first, check if there is a token
   if (!exists("token", envir = credentials)) {
@@ -27,7 +31,7 @@ bwg_get <- function(dataname, opts = NULL, to_dataframe = TRUE) {
   bearer <- paste0("bearer ", token_value)
 
   ## request the species
-  baseurl <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"
+  # baseurl <- "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"
   list_method <- list(route = dataname, action = "list")
   q <- c(list_method, opts)
 
@@ -97,18 +101,50 @@ get_all_abundances <- function(.dats){
 #'   downloaded. Typically these would be unique, as in the output from
 #'   `bwg_get("visits")`.
 #'
-#' @returns a single dataframe with a column called visit_id, where visit ID is
-#'   stored as an integer. The dataframe has one row per bromeliad.
+#' @returns a list with one element per row of the input dataframe. Each element
+#'   it named after a visit_id, and contains a dataframe of all the bromeliads
+#'   collected during that visit
 #' @export
 get_all_bromeliads <- function(.dats){
 
-  all_brom_list_dropempty <- all_brom_list |>
+  ## might need to replace this with a suitable structure
+  bwg_get_safe <- purrr::possibly(bwg_get, NA)
+
+  broms_ <- .dats[["visit_id"]] |>
+    as.numeric() |>
+    purrr::set_names() |>
+    purrr::map(~ list(visit_id = .x)) |>
+    purrr::map(~ bwg_get_safe("bromeliads", .))
+
+  return(broms_)
+
+}
+
+
+
+
+#' Converte bromeliad list to a dataframe
+#'
+#' also does a little checking to make sure that the visit IDs of the bromeliads
+#' that come back are UNIQUE and identical with what was asked for.
+#'
+#' Also tells  you how many bromeliads you've got.
+#'
+#' @param .all_bromeliads_list list where each element is all the bromeliads of
+#'   a certain visit.
+#'
+#' @returns a dataframe, one row per bromeliad
+#' @export
+all_bromeliads_list_to_df <- function(.all_bromeliads_list){
+
+  all_brom_list_dropempty <-  .all_bromeliads_list  |>
+    purrr::discard(is.null) |>
     purrr::discard(~nrow(.x) == 0)
 
-  all_brom_list_dropempty |>
+  visit_id_vec <- all_brom_list_dropempty |>
     purrr:::map_int(~unique(.x[["visit_id"]]))
 
-  if(all(names(vids) == vids)) {
+  if(all(names(visit_id_vec) == visit_id_vec)) {
     message("all visit ID match correctly to the query, with no duplicates")
   } else {
     stop("there seems to be a visit response that doesn't match the query")
@@ -116,8 +152,9 @@ get_all_bromeliads <- function(.dats){
 
   # id column not necessary because the visit ID is within the table also, and the
   # database key is identical to the visible visit_id
-  all_brom_df <- dplyr::bind_rows(all_brom_list, .id = NULL)
+  all_brom_df <- dplyr::bind_rows(all_brom_list_dropempty, .id = NULL)
 
+  message(paste0("returning ", nrow(all_brom_df), " bromeliads"))
   return(all_brom_df)
 }
 

@@ -4,7 +4,12 @@
 \alias{bwg_get}
 \title{Get data from bwg}
 \usage{
-bwg_get(dataname, opts = NULL, to_dataframe = TRUE)
+bwg_get(
+  dataname,
+  opts = NULL,
+  to_dataframe = TRUE,
+  baseurl = "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"
+)
 }
 \arguments{
 \item{dataname}{the name of the dataset you want (e.g.
@@ -15,6 +20,8 @@ bwg_get(dataname, opts = NULL, to_dataframe = TRUE)
 \item{to_dataframe}{logical, should the response be converted to a
 data frame? Default is TRUE. If FALSE, the raw content of the response
 is returned as text.}
+
+\item{baseurl}{the database URL we're using. defaults to "https://www.zoology.ubc.ca/~srivast/bwgdb/v3/api/"}
 }
 \value{
 a data.frame containing one whole table.

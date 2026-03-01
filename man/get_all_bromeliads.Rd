@@ -13,8 +13,9 @@ downloaded. Typically these would be unique, as in the output from
 `bwg_get("visits")`.}
 }
 \value{
-a single dataframe with a column called visit_id, where visit ID is
-  stored as an integer. The dataframe has one row per bromeliad.
+a list with one element per row of the input dataframe. Each element
+  it named after a visit_id, and contains a dataframe of all the bromeliads
+  collected during that visit
 }
 \description{
 Get all bromeliad information from the database
